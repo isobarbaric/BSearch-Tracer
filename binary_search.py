@@ -1,27 +1,77 @@
 
+import pandas as pd
+
 class BinarySearch:
 
     def __init__(self) -> None:
         pass
 
-    # returns index of element using binary search
-    def __binary_search(self, nums: list, target: int, low: int, high: int, path: list) -> list:
-        # NOTE: whether or not the number was found successfully or not is basically just checking if the L and R are out of order in the last tuple
+    def __bsearch(self, nums: list, target: int, left: int, right: int, path: list) -> list:
+        """Performs binary search given a list and target
 
-        path.append([low, high])
+        :param nums: a list of sorted numbers
+        :type nums: list
+        :param target: the value looked for in the nums
+        :type target: int
+        :param left: the value of the left pointer in bsearch
+        :type left: int
+        :param right: the value of the right pointer in bsearch
+        :type right: int
+        :param path: the values of the l, r pointers seen so far
+        :type path: list
+        :return: the entire path list, tracing the left and right pointers throughout the bsearch
+        :rtype: list
+        """
+        path.append([left, right])
 
-        if low > high:
+        if left > right:
             return path
 
-        mid = (low + high) // 2
+        mid = (left + right) // 2
 
         if nums[mid] == target:
             return path
         elif nums[mid] < target:
-            return self.__binary_search(nums, target, mid+1, high, path)
+            return self.__bsearch(nums, target, mid+1, right, path)
         else:
-            return self.__binary_search(nums, target, low, mid-1, path)
+            return self.__bsearch(nums, target, left, mid-1, path)
 
-    def find_path(self, nums: list, target: int) -> list:
+    def provide_data(self, nums: list, target: int) -> list:
+        '''Traces binary search to provide information on how binary search
+
+        :param nums: a list of sorted numbers
+        :type nums: list
+        :param target: the value looked for in the nums
+        :type target: int
+        '''
         nums.sort()
-        return self.__binary_search(nums, target, 0, len(nums)-1, [])
+        path = self.__bsearch(nums, target, 0, len(nums)-1, [])
+
+        logic_flow = []
+
+        for step in path:
+            mid = (step[0]+step[1]) // 2
+
+            outcome = ''
+            if nums[mid] > target:
+                outcome = "> target"
+            elif nums[mid] < target:
+                outcome = "< target"
+            else:
+                outcome = "= target"
+
+            logic_flow.append({
+                'left': step[0],
+                'right': step[1],
+                'value': nums[mid],
+                'outcome': outcome
+            })
+
+        df = pd.DataFrame.from_records(logic_flow)
+        df.index += 1
+        name = f"Binary Search, target = {target}"
+
+        # use MultiIndex to add a header
+        df.columns = pd.MultiIndex.from_product([[name], df.columns])
+
+        return df
