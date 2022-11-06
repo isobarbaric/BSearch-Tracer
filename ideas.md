@@ -1,2 +1,0 @@
-- make it so that the animation can be sped up and slowed down from a standard sleep
-- 

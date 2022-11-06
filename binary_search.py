@@ -25,7 +25,3 @@ class BinarySearch:
     def find_path(self, nums: list, target: int) -> list:
         nums.sort()
         return self.__binary_search(nums, target, 0, len(nums)-1, [])
-
-a = BinarySearch()
-b = [1, 2, 32, 53, 325, 2323]
-print(a.find_path(b, 31))
