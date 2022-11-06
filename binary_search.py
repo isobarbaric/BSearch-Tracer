@@ -36,7 +36,7 @@ class BinarySearch:
         else:
             return self.__bsearch(nums, target, left, mid-1, path)
 
-    def provide_data(self, nums: list, target: int) -> list:
+    def trace(self, nums: list, target: int) -> list:
         '''Traces binary search to provide information on how binary search
 
         :param nums: a list of sorted numbers
