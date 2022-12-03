@@ -6,7 +6,7 @@ class BinarySearch:
     def __init__(self) -> None:
         pass
 
-    def __bsearch(self, nums: list, target: int, left: int, right: int, path: list) -> list:
+    def __bsearch(nums: list, target: int, left: int, right: int, path: list) -> list:
         """Performs binary search given a list and target
 
         :param nums: a list of sorted numbers
@@ -32,11 +32,11 @@ class BinarySearch:
         if nums[mid] == target:
             return path
         elif nums[mid] < target:
-            return self.__bsearch(nums, target, mid+1, right, path)
+            return BinarySearch.__bsearch(nums, target, mid+1, right, path)
         else:
-            return self.__bsearch(nums, target, left, mid-1, path)
+            return BinarySearch.__bsearch(nums, target, left, mid-1, path)
 
-    def trace(self, nums: list, target: int) -> list:
+    def trace(nums: list, target: int) -> list:
         '''Traces binary search to provide information on how binary search
 
         :param nums: a list of sorted numbers
@@ -45,7 +45,7 @@ class BinarySearch:
         :type target: int
         '''
         nums.sort()
-        path = self.__bsearch(nums, target, 0, len(nums)-1, [])
+        path = BinarySearch.__bsearch(nums, target, 0, len(nums)-1, [])
 
         logic_flow = []
 
