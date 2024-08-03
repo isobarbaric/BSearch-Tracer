@@ -31,7 +31,7 @@ def search(nums: list, target: int, left: int, right: int, path: list) -> list:
     else:
         return search(nums, target, left, mid-1, path)
 
-@staticmethod
+
 def trace(nums: list, target: int) -> list:
     '''Traces binary search to provide information on how binary search
 
